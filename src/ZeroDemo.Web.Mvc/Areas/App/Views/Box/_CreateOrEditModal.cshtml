@@ -1,0 +1,48 @@
+﻿@using Abp.Configuration
+@using Abp.Json
+@using Abp.Zero.Configuration
+@using ZeroDemo.AlarmBox.Boxes
+@using ZeroDemo.Web.Areas.App.Models.Common.Modals
+@using ZeroDemo.Web.Areas.App.Models.Box
+@model CreateOrEditBoxModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditBox") + ": " + Model.BoxName) : L("CreateBox")))
+
+<div class="modal-body">
+    <form name="BoxInformationsForm" role="form" novalidate class="form-validation">
+
+        @if (Model.IsEditMode)
+        {
+            <input type="hidden" name="Id" value="@Model.Id" />
+        }
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="BoxName">@L("BoxName")</label>
+                    <input id="BoxName" class="form-control" value="@Model.BoxName" type="text" name="BoxName" required maxlength="@ZeroDemo.AlarmBox.Boxes.BoxConsts.MaxBoxNameLength">
+                </div>
+                <div class="form-group">
+                    <label for="Location">@L("Location")</label>
+                    <input id="Location" type="text" name="Location" class="form-control" value="@Model.Location" required maxlength="@ZeroDemo.AlarmBox.Boxes.BoxConsts.MaxLocationLength">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="MaxBoxPort">@L("MaxBoxPort")</label>
+                    <input id="MaxBoxPort" type="number" name="MaxBoxPort" class="form-control" value="@Model.MaxBoxPort">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="MaxBoxManagerPort">@L("MaxBoxManagerPort")</label>
+                    <input id="MaxBoxManagerPort" type="number" name="MaxBoxManagerPort" class="form-control" value="@Model.MaxBoxManagerPort">
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

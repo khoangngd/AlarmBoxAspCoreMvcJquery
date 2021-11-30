@@ -263,7 +263,7 @@
     <text name="InvlalidLanguageCode">Mã ngôn ngữ không hợp lệ.</text>
     <text name="EditLanguage">Chỉnh sửa ngôn ngữ</text>
     <text name="ChangeTexts">Thay đổi văn bản</text>
-    <text name="TargetValue">Giá trị của mục tiêu</text>
+    <text name="TargetValue">Giá trị mục tiêu</text>
     <text name="BaseValue">Giá trị cơ sở</text>
     <text name="Key">Chìa khóa</text>
     <text name="SaveAndClose">Lưu &amp; Đóng</text>
@@ -784,5 +784,20 @@
     <text name="Green">Màu lục</text>
     <text name="Pink">Màu hồng</text>
     <text name="Yellow">Màu vàng</text>
+    <!--//-->
+    <text name="Box">Hộp</text>
+    <text name="Sensor">Cảm biến</text>
+    <text name="Add">Thêm</text>
+    <text name="HighValue">Giá trị cao</text>
+    <text name="LowValue">Giá trị thấp</text>
+    <text name="HighValueDefault">Giá trị cao mặc định</text>
+    <text name="LowValueDefault">Giá trị thấp mặc định</text>
+    <text name="TargetValueDefault">Giá trị mục tiêu mặc định</text>
+    <text name="Port">Cổng</text>
+    <text name="Alarm">Báo động</text>
+    <text name="OutOfPort">Hết cổng</text>
+    <text name="PortInUse">Cổng đang được sử dụng</text>
+    <text name="SensorInUse">Cảm biến đang được sử dụng</text>
+    
   </texts>
 </localizationDictionary>

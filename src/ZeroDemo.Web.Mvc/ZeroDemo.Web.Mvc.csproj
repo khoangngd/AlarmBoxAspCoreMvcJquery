@@ -13,8 +13,11 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>4.3</TypeScriptToolsVersion>
     <PreserveCompilationReferences>true</PreserveCompilationReferences>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>5</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="App_Data\**" />

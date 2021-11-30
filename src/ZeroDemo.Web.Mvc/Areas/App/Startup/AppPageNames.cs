@@ -15,6 +15,10 @@
             public const string WebhookSubscriptions = "Administration.WebhookSubscriptions";
             public const string DynamicProperties = "Administration.DynamicProperties";
             public const string DynamicEntityProperties = "Administration.DynamicEntityProperties";
+
+            //
+            public const string Box = "Box";
+            public const string Sensor = "Sensor";
         }
 
         public static class Host

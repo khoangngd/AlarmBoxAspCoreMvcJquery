@@ -11,6 +11,14 @@ using Abp.Organizations;
 using Abp.UI.Inputs;
 using Abp.Webhooks;
 using AutoMapper;
+using ZeroDemo.AlarmBox.Boxes;
+using ZeroDemo.AlarmBox.Boxes.Dtos;
+using ZeroDemo.AlarmBox.BoxManagers;
+using ZeroDemo.AlarmBox.BoxManagers.Dtos;
+using ZeroDemo.AlarmBox.SensorConfigs;
+using ZeroDemo.AlarmBox.SensorConfigs.Dtos;
+using ZeroDemo.AlarmBox.Sensors;
+using ZeroDemo.AlarmBox.Sensors.Dtos;
 using ZeroDemo.Auditing.Dto;
 using ZeroDemo.Authorization.Accounts.Dto;
 using ZeroDemo.Authorization.Delegation;
@@ -161,6 +169,18 @@ namespace ZeroDemo
             configuration.CreateMap<CreateUserDelegationDto, UserDelegation>();
 
             /* ADD YOUR OWN CUSTOM AUTOMAPPER MAPPINGS HERE */
+            configuration.CreateMap<Box, BoxDto>();
+            configuration.CreateMap<BoxInputDto, Box>();
+
+            configuration.CreateMap<Sensor, SensorDto>();
+            configuration.CreateMap<SensorInputDto, Sensor>();
+
+            configuration.CreateMap<SensorConfig, SensorConfigDto>();
+            configuration.CreateMap<SensorConfig, SensorConfigNoSensorDto>();
+            configuration.CreateMap<SensorConfigInputDto, SensorConfig>();
+
+            configuration.CreateMap<BoxManager, BoxManagerDto>();
+            configuration.CreateMap<BoxManagerInputDto, BoxManager>();
         }
     }
 }

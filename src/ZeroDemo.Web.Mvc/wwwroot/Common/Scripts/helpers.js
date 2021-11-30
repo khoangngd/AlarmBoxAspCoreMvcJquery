@@ -5,6 +5,9 @@
     app.localize = function () {
         return appLocalizationSource.apply(this, arguments);
     };
+    app.localizes = function (textInput) {
+        return (textInput.split(',').map(p => app.localize(p.trim()))).join(' ');
+    };
 
     app.downloadTempFile = function (file) {
         location.href = abp.appPath + 'File/DownloadTempFile?fileType=' + file.fileType + '&fileToken=' + file.fileToken + '&fileName=' + file.fileName;

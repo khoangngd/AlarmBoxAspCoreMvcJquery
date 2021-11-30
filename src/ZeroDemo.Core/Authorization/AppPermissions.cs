@@ -97,5 +97,26 @@
         public const string Pages_Administration_Host_Settings = "Pages.Administration.Host.Settings";
         public const string Pages_Administration_Host_Dashboard = "Pages.Administration.Host.Dashboard";
 
+        //
+        public const string Pages_Box = "Pages.Box";
+        public const string Pages_Box_Create = "Pages.Box.Create";
+        public const string Pages_Box_Edit = "Pages.Box.Edit";
+        public const string Pages_Box_Delete = "Pages.Box.Delete";
+
+        public const string Pages_Sensor = "Pages.Sensor"; 
+        public const string Pages_Sensor_Create = "Pages.Sensor.Create";
+        public const string Pages_Sensor_Edit = "Pages.Sensor.Edit";
+        public const string Pages_Sensor_Delete = "Pages.Sensor.Delete";
+
+        public const string Pages_SensorConfig = "Pages.SensorConfig"; 
+        public const string Pages_SensorConfig_Create = "Pages.SensorConfig.Create";
+        public const string Pages_SensorConfig_Edit = "Pages.SensorConfig.Edit";
+        public const string Pages_SensorConfig_Delete = "Pages.SensorConfig.Delete";
+
+        public const string Pages_BoxManager = "Pages.BoxManager"; 
+        public const string Pages_BoxManager_Create = "Pages.BoxManager.Create";
+        public const string Pages_BoxManager_Edit = "Pages.BoxManager.Edit";
+        public const string Pages_BoxManager_Delete = "Pages.BoxManager.Delete";
+
     }
 }

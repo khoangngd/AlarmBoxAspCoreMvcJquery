@@ -1,0 +1,81 @@
+﻿@using Abp.Configuration
+@using Abp.Json
+@using Abp.Zero.Configuration
+@using ZeroDemo.AlarmBox.Boxes
+@using ZeroDemo.Web.Areas.App.Models.Common.Modals
+@using ZeroDemo.Web.Areas.App.Models.Box
+@model CreateOrEditBoxModalViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel((L("AddSensorConfig") + ": " + Model.BoxName)))
+
+<div class="modal-body">
+    <form name="BoxInformationsForm" role="form" novalidate class="form-validation">
+        @if (Model.IsEditMode)
+        {
+            @*<input type="hidden" name="BoxId" value="@Model.Id" />
+            <input type="hidden" name="MaxBoxPort" value="@Model.MaxBoxPort" />*@
+        }
+    </form>
+    <div class="form">
+        <div class="row align-items-center mb-4">
+            <div class="col-xl-12">
+                <div class="form-group align-items-center">
+                    <div class="input-group">
+                        <input type="text" id="SensorTableFilter" class="form-control" placeholder="@L("SearchWithThreeDot")" @*value="@Model.FilterText"*@>
+                        <span class="input-group-btn">
+                            <button id="GetSensorButton" class="btn btn-primary" type="submit">
+                                <i class="flaticon-search-1" aria-label="@L("Search")"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+            @*@if (IsGranted(AppPermissions.Pages_Administration_Roles))
+                {
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            @Html.DropDownList("RoleSelectionCombosensor", Model.Roles.Select(i => i.ToSelectListItem()), new { @class = "form-control selectpicker", data_live_search = "true", data_none_selected_text = L("FilterByRole"), id = "RoleSelectionCombo" })
+                        </div>
+                    </div>
+                }*@
+            <div class="col-xl-6">
+                <div class="checksensor-list">
+                    <label class="checksensor checksensor-outline">
+                        <input type="checkbox"
+                               id="SensorTable_IsDeletedSensor"
+                               name="IsDeletedSensorChecksensor"
+                               value="false">
+                        @L("IsDeleted")
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-xl-12 text-right">
+                <button id="RefreshSensorListButton" class="btn btn-primary">
+                    <i class="fa fa-sync"></i> @L("Refresh")
+                </button>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="col-xl-12">
+                <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item">
+                    <i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")
+                </span>
+                <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none">
+                    <i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="align-items-center">
+        <table id="SensorTable" class="table table-separate table-head-custom dataTable no-footer dtr-inline dt-responsive nowrap">
+
+        </table>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-light-primary font-weight-bold close-button" data-dismiss="modal">@L("Cancel")</button>   
+</div>

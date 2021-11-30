@@ -115,6 +115,27 @@ namespace ZeroDemo.Authorization
             administration.CreateChildPermission(AppPermissions.Pages_Administration_Host_Maintenance, L("Maintenance"), multiTenancySides: _isMultiTenancyEnabled ? MultiTenancySides.Host : MultiTenancySides.Tenant);
             administration.CreateChildPermission(AppPermissions.Pages_Administration_HangfireDashboard, L("HangfireDashboard"), multiTenancySides: _isMultiTenancyEnabled ? MultiTenancySides.Host : MultiTenancySides.Tenant);
             administration.CreateChildPermission(AppPermissions.Pages_Administration_Host_Dashboard, L("Dashboard"), multiTenancySides: MultiTenancySides.Host);
+
+            //
+            var box = pages.CreateChildPermission(AppPermissions.Pages_Box, L("Box"));
+            box.CreateChildPermission(AppPermissions.Pages_Box_Create, L("CreateBox"));
+            box.CreateChildPermission(AppPermissions.Pages_Box_Edit, L("EditBox"));
+            box.CreateChildPermission(AppPermissions.Pages_Box_Delete, L("DeleteBox"));
+
+            var sensor = pages.CreateChildPermission(AppPermissions.Pages_Sensor, L("Sensor"));
+            sensor.CreateChildPermission(AppPermissions.Pages_Sensor_Create, L("CreateSensor"));
+            sensor.CreateChildPermission(AppPermissions.Pages_Sensor_Edit, L("EditSensor"));
+            sensor.CreateChildPermission(AppPermissions.Pages_Sensor_Delete, L("DeleteSensor"));
+
+            var sensorConfig = pages.CreateChildPermission(AppPermissions.Pages_SensorConfig, L("SensorConfig"));
+            sensorConfig.CreateChildPermission(AppPermissions.Pages_SensorConfig_Create, L("CreateSensorConfig"));
+            sensorConfig.CreateChildPermission(AppPermissions.Pages_SensorConfig_Edit, L("EditSensorConfig"));
+            sensorConfig.CreateChildPermission(AppPermissions.Pages_SensorConfig_Delete, L("DeleteSensorConfig"));
+
+            var boxManager = pages.CreateChildPermission(AppPermissions.Pages_BoxManager, L("BoxManager"));
+            boxManager.CreateChildPermission(AppPermissions.Pages_BoxManager_Create, L("CreateBoxManager"));
+            boxManager.CreateChildPermission(AppPermissions.Pages_BoxManager_Edit, L("EditBoxManager"));
+            boxManager.CreateChildPermission(AppPermissions.Pages_BoxManager_Delete, L("DeleteBoxManager"));
         }
 
         private static ILocalizableString L(string name)

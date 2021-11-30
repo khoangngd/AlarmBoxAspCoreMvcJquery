@@ -2,6 +2,10 @@
 using Abp.Organizations;
 using Abp.Zero.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ZeroDemo.AlarmBox.Boxes;
+using ZeroDemo.AlarmBox.BoxManagers;
+using ZeroDemo.AlarmBox.SensorConfigs;
+using ZeroDemo.AlarmBox.Sensors;
 using ZeroDemo.Authorization.Delegation;
 using ZeroDemo.Authorization.Roles;
 using ZeroDemo.Authorization.Users;
@@ -36,6 +40,13 @@ namespace ZeroDemo.EntityFrameworkCore
         public virtual DbSet<SubscriptionPaymentExtensionData> SubscriptionPaymentExtensionDatas { get; set; }
 
         public virtual DbSet<UserDelegation> UserDelegations { get; set; }
+
+        //
+        public virtual DbSet<Box> Boxes { get; set; }
+        public virtual DbSet<Sensor> Sensors { get; set; }
+        public virtual DbSet<SensorConfig> SensorConfigs { get; set; }
+        public virtual DbSet<BoxManager> BoxManagers { get; set; }
+
 
         public ZeroDemoDbContext(DbContextOptions<ZeroDemoDbContext> options)
             : base(options)

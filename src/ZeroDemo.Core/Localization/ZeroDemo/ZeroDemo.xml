@@ -1123,5 +1123,18 @@
     <text name="EditValues">Edit Values</text>
     <text name="FullName">Full Name</text>
     <text name="FirstName">First Name</text>
+    <!--//-->
+    <text name="Box">Box</text>
+    <text name="Sensor">Sensor</text>
+    <text name="HighValue">High value</text>
+    <text name="LowValue">Low value</text>
+    <text name="HighValueDefault">High value default</text>
+    <text name="LowValueDefault">Low value default</text>
+    <text name="TargetValueDefault">Target value default</text>
+    <text name="Port">Port</text>
+    <text name="Alarm">Alarm</text>
+    <text name="OutOfPort">Out of port</text>
+    <text name="PortInUse">Port in use</text>
+    <text name="SensorInUse">Sensor in use</text>
   </texts>
 </localizationDictionary>

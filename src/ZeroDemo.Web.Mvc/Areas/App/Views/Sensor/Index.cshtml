@@ -1,0 +1,119 @@
+﻿@using Abp.Application.Services.Dto
+@using ZeroDemo.Authorization
+@using ZeroDemo.Web.Areas.App.Models.Sensor
+@using ZeroDemo.Web.Areas.App.Startup
+
+@*@model SensorViewModel*@
+@{
+    ViewBag.CurrentPageName = AppPageNames.Common.Sensor;
+}
+
+@section Styles
+{
+    @*<link rel="stylesheet" abp-href="/view-resources/Areas/App/Views/Users/Index.css" asp-append-version="true" />*@
+}
+
+@section Scripts
+{
+    <environment names="Development">
+        @*<script src="~/view-resources/Areas/App/Views/Sensor/_CreatePersonModal.js" asp-append-version="true"></script>*@
+        <script src="~/view-resources/Areas/App/Views/Sensor/Index.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <abp-page-subheader title="@L("Sensor")" description="@L("SensorHeaderInfo")">
+        <div class="btn-group">
+            <button type="button" class="btn btn-outline-success dropdown-toggle mr-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="far fa-file-excel"></i> @L("ExcelOperations")
+            </button>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" id="ExportUsersToExcelButton" href="#"> @L("ExportToExcel")</a>               
+                <div class="dropdown-divider"></div>
+            </div>
+        </div>
+
+        @if (IsGranted(AppPermissions.Pages_Sensor_Create))
+        {
+            <button id="CreateSensorButton" class="btn btn-primary">
+                <i class="fa fa-plus"></i> @L("CreateSensor")
+            </button>
+        }
+    </abp-page-subheader>
+
+    <div class="@(await GetContainerClass())">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <div class="form">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-xl-12">
+                            <div class="form-group align-items-center">
+                                <div class="input-group">
+                                    <input type="text" id="SensorTableFilter" class="form-control" placeholder="@L("SearchWithThreeDot")" @*value="@Model.FilterText"*@>
+                                    <span class="input-group-btn">
+                                        <button id="GetSensorButton" class="btn btn-primary" type="submit">
+                                            <i class="flaticon-search-1" aria-label="@L("Search")"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+                        @*@if (IsGranted(AppPermissions.Pages_Administration_Roles))
+                            {
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        @Html.DropDownList("RoleSelectionCombosensor", Model.Roles.Select(i => i.ToSelectListItem()), new { @class = "form-control selectpicker", data_live_search = "true", data_none_selected_text = L("FilterByRole"), id = "RoleSelectionCombo" })
+                                    </div>
+                                </div>
+                            }*@
+                        <div class="col-xl-6">
+                            <div class="checksensor-list">
+                                <label class="checksensor checksensor-outline">
+                                    <input type="checkbox"
+                                           id="SensorTable_IsDeletedSensor"
+                                           name="IsDeletedSensorChecksensor"
+                                           value="false">
+                                    @L("IsDeleted")
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 text-right">
+                            <button id="RefreshSensorListButton" class="btn btn-primary">
+                                <i class="fa fa-sync"></i> @L("Refresh")
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-xl-12">
+                            <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item">
+                                <i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")
+                            </span>
+                            <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none">
+                                <i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="align-items-center">
+                    <table id="SensorTable" class="table table-separate table-head-custom dataTable no-footer dtr-inline dt-responsive nowrap">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>@L("Actions")</th>
+                                <th>@L("Id")</th>
+                                <th>@L("SensorName")</th>
+                                <th>@L("HighValueDefault")</th>
+                                <th>@L("LowValueDefault")</th>
+                                <th>@L("TargetValueDefault")</th>
+                                <th>@L("CreationTime")</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -141,7 +141,24 @@ namespace ZeroDemo.Web.Areas.App.Startup
                         icon: "flaticon-shapes",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_DemoUiComponents)
                     )
-                );
+                )
+                .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.Box,
+                        L("Box"),
+                        url: "App/Box",
+                        icon: "flaticon-shapes",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Box)
+                    )
+                )
+                 .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.Sensor,
+                        L("Sensor"),
+                        url: "App/Sensor",
+                        icon: "flaticon-shapes"
+                        //, permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Sensor)
+                    )
+                )
+                ;
         }
 
         private static ILocalizableString L(string name)

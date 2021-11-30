@@ -1357,6 +1357,230 @@ namespace ZeroDemo.Migrations
                     b.ToTable("AbpWebhookSubscriptions");
                 });
 
+            modelBuilder.Entity("ZeroDemo.AlarmBox.BoxManagers.BoxManager", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<long>("BoxId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAlarm")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("ManagerEmail")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(512)")
+                        .HasMaxLength(512);
+
+                    b.Property<string>("ManagerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("ManagerPhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(32)")
+                        .HasMaxLength(32);
+
+                    b.Property<int>("ManagerPort")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoxId");
+
+                    b.ToTable("App_BoxManagers");
+                });
+
+            modelBuilder.Entity("ZeroDemo.AlarmBox.Boxes.Box", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BoxName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1028)")
+                        .HasMaxLength(1028);
+
+                    b.Property<int>("MaxBoxManagerPort")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxBoxPort")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("App_Boxes");
+                });
+
+            modelBuilder.Entity("ZeroDemo.AlarmBox.SensorConfigs.SensorConfig", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AlarmMessage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("BoxId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("BoxPort")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("HighValue")
+                        .HasColumnType("float");
+
+                    b.Property<string>("InrangeColor")
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<bool>("IsAlarm")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("LowValue")
+                        .HasColumnType("float");
+
+                    b.Property<string>("OutrangeColor")
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
+
+                    b.Property<long>("SensorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("TargetValue")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BoxId");
+
+                    b.HasIndex("SensorId");
+
+                    b.ToTable("App_SensorConfigs");
+                });
+
+            modelBuilder.Entity("ZeroDemo.AlarmBox.Sensors.Sensor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("HighValueDefault")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("LowValueDefault")
+                        .HasColumnType("float");
+
+                    b.Property<string>("SensorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<double>("TargetValueDefault")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("App_Sensors");
+                });
+
             modelBuilder.Entity("ZeroDemo.Authorization.Delegation.UserDelegation", b =>
                 {
                     b.Property<long>("Id")
@@ -2165,6 +2389,30 @@ namespace ZeroDemo.Migrations
                     b.HasOne("Abp.Webhooks.WebhookEvent", "WebhookEvent")
                         .WithMany()
                         .HasForeignKey("WebhookEventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ZeroDemo.AlarmBox.BoxManagers.BoxManager", b =>
+                {
+                    b.HasOne("ZeroDemo.AlarmBox.Boxes.Box", "Box")
+                        .WithMany("BoxManagers")
+                        .HasForeignKey("BoxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ZeroDemo.AlarmBox.SensorConfigs.SensorConfig", b =>
+                {
+                    b.HasOne("ZeroDemo.AlarmBox.Boxes.Box", "Box")
+                        .WithMany("SensorConfigs")
+                        .HasForeignKey("BoxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ZeroDemo.AlarmBox.Sensors.Sensor", "Sensor")
+                        .WithMany("SensorConfigs")
+                        .HasForeignKey("SensorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

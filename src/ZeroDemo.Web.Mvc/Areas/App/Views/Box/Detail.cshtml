@@ -1,0 +1,156 @@
+﻿@using Abp.Application.Services.Dto
+@using ZeroDemo.Authorization
+@using ZeroDemo.Web.Areas.App.Models.Box
+@using ZeroDemo.Web.Areas.App.Startup
+@model CreateOrEditBoxModalViewModel
+@{
+    ViewBag.CurrentPageName = AppPageNames.Common.Box;
+}
+
+@section Styles
+{
+    <link rel="stylesheet" abp-href="/view-resources/Areas/App/Views/Box/Detail.css" asp-append-version="true" />
+}
+
+@section Scripts
+{
+    <environment names="Development">
+        @*<script src="~/view-resources/Areas/App/Views/Box/_CreateOrEditModal.js" asp-append-version="true"></script>*@
+        <script src="~/view-resources/Areas/App/Views/Box/Detail.js" asp-append-version="true"></script>
+        @*<script src="~/view-resources/Areas/App/Views/Sensor/Index.js" asp-append-version="true"></script>*@
+    </environment>
+}
+
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <abp-page-subheader title="@L("Box")" description="@Model.BoxName">
+        <button id="BackButton" class="btn btn-secondary" onclick="history.back();" style="margin-right:3px">
+            <i class="fa fa-chevron-left"></i> @L("Back")
+        </button>
+    </abp-page-subheader>
+    <div class="@(await GetContainerClass())">
+        <div class="card card-custom gutter-b">
+            <div class="card-body">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a href="#BoxInformationsTab" class="nav-link active" data-toggle="tab" role="tab">
+                            @L("BoxInformations")
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#SensorConfigTab" name="SensorConfigTab" data-toggle="tab" role="tab" class="nav-link">
+                            @L("SensorConfig") @*<span id="assigned-role-count" class="label label-lg label-rounded label-success mr-2">@Model.AssignedRoleCount</span>*@
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#BoxManagerTab" name="BoxManagerTab" data-toggle="tab" role="tab" class="nav-link">
+                            @L("BoxManager")
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane pt-5 active" id="BoxInformationsTab" role="tabpanel">
+                        <form name="BoxInformationsForm" role="form" novalidate class="form-validation">
+                            @if (Model.IsEditMode)
+                            {
+                                <input type="hidden" name="BoxId" value="@Model.Id" />
+                                @*<input type="hidden" name="MaxBoxPort" value="@Model.MaxBoxPort" />*@
+                            }
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="BoxName">@L("BoxName")</label>
+                                        <input id="BoxName" class="form-control" value="@Model.BoxName" type="text" name="BoxName" required maxlength="@ZeroDemo.AlarmBox.Boxes.BoxConsts.MaxBoxNameLength">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Location">@L("Location")</label>
+                                        <input id="Location" type="text" name="Location" class="form-control" value="@Model.Location" required maxlength="@ZeroDemo.AlarmBox.Boxes.BoxConsts.MaxLocationLength">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="MaxBoxPort">@L("MaxBoxPort")</label>
+                                        <input id="MaxBoxPort" type="number" name="MaxBoxPort" class="form-control" value="@Model.MaxBoxPort">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label for="MaxBoxManagerPort">@L("MaxBoxManagerPort")</label>
+                                        <input id="MaxBoxManagerPort" type="number" name="MaxBoxManagerPort" class="form-control" value="@Model.MaxBoxManagerPort">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary save-button"><i class="fa fa-save"></i> <span>@L("Save")</span></button>
+                        </div>
+                    </div>
+                    <div class="tab-pane pt-5" id="SensorConfigTab" role="tabpanel">
+                        <div class="form">
+                            <div class="row align-items-center mb-4">
+                                <div class="col-xl-12">
+                                    <div class="form-group align-items-center">
+                                        <div class="input-group">
+                                            <input type="text" id="SensorConfigTableFilter" class="form-control" placeholder="@L("SearchWithThreeDot")" @*value="@Model.FilterText"*@>
+                                            <span class="input-group-btn">
+                                                <button id="GetSensorConfigButton" class="btn btn-primary" type="submit">
+                                                    <i class="flaticon-search-1" aria-label="@L("Search")"></i>
+                                                </button>
+                                                @if (IsGranted(AppPermissions.Pages_Box_Create))
+                                                {
+                                                    <button id="AddSensorConfigButton" class="btn btn-primary">
+                                                        <i class="fa fa-plus"></i> @L("AddSensorConfig")
+                                                    </button>
+                                                }
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="AdvacedAuditFiltersArea" style="display: none" class="row mb-4">
+                                <div class="col-xl-6">
+                                    <div class="checksensor-list">
+                                        <label class="checksensor checksensor-outline">
+                                            <input type="checkbox"
+                                                   id="SensorConfigTable_IsDeletedSensorConfig"
+                                                   name="IsDeletedSensorConfigChecksensor"
+                                                   value="false">
+                                            @L("IsDeleted")
+                                            <span></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 text-right">
+                                    <button id="RefreshSensorConfigListButton" class="btn btn-primary">
+                                        <i class="fa fa-sync"></i> @L("Refresh")
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-xl-12">
+                                    <span id="ShowAdvancedFiltersSpan" class="text-muted clickable-item">
+                                        <i class="fa fa-angle-down"></i> @L("ShowAdvancedFilters")
+                                    </span>
+                                    <span id="HideAdvancedFiltersSpan" class="text-muted clickable-item" style="display: none">
+                                        <i class="fa fa-angle-up"></i> @L("HideAdvancedFilters")
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="align-items-center">
+                            <table id="SensorConfigTable" class="table table-separate table-head-custom dataTable no-footer dtr-inline dt-responsive nowrap">                               
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane pt-5" id="BoxManagerTab" role="tabpanel">
+                        <div class="align-items-center">
+                            <table id="BoxManagerTable" class="table table-separate table-head-custom dataTable no-footer dtr-inline dt-responsive nowrap">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
