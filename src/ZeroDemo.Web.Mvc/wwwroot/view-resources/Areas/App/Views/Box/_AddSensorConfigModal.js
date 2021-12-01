@@ -5,23 +5,19 @@
         var _modalManager;
         var _$boxInformationForm = null;
         var _sensorConfigService = abp.services.app.sensorConfig;
-        var optionsBoxPort = '';
-        var rangePort = [];
         var countAdded = 0;
         var _$sensorTable = $('#SensorTable');
         var _sensorService = abp.services.app.sensor;
-        var currentBoxId = parseInt($('input[name=BoxId]').val());       
-        //let sensorConfigsAdded = [];
+        var currentBoxId = parseInt($('input[name=BoxId]').val());
+        var rangePort = [];
+        var sensorConfigsAdded = [];
+        var countInitComplete = 0;
 
         this.init = function (modalManager) {
             _modalManager = modalManager;
             _$boxInformationForm = _modalManager.getModal().find('form[name=BoxInformationsForm]');
             _$boxInformationForm.validate();
-
             rangePort = Array.from({ length: parseInt($('#MaxBoxPort').val()) }, (_, i) => i + 1);
-            rangePort.forEach(function (ele) {
-                optionsBoxPort += '<option name="boxPortDefault" value="' + ele + '">' /*+ app.localize('Port')*/ + ele + '</option>';
-            })
         };
 
         var _permissions = {
@@ -34,24 +30,52 @@
             paging: true,
             serverSide: true,
             processing: true,
-            //createdRow: function (row, data, index) {
-            //    debugger;
-            //    //$compile(row)($scope);
-            //    //if (currentBoxId && data.sensorConfigs && data.sensorConfigs.length > 0) {
-            //    //    let count = _.where(data.sensorConfigs, { boxId: currentBoxId }).length;
-            //    //    if (count > 0)
-            //    //        $(row).addClass('dt-sensor-added-bg');
-            //    //}
-            //},
+            createdRow: function (row, data, index) {
+                //$compile(row)($scope);
+                if (currentBoxId && data.sensorConfigs && data.sensorConfigs.length > 0) {
+                    let count = _.where(data.sensorConfigs, { boxId: currentBoxId }).length;
+                    if (count > 0)
+                        $(row).addClass('dt-sensor-added-bg');
+                }
+            },
             listAction: {
                 ajaxFunction: _sensorService.getAll,
                 inputFilter: function () {
                     return {
                         filter: $('#SensorTableFilter').val(),
-                        //permissions: _selectedPermissionNames,
                         //boxId: currentBoxId,
                         isDeletedSensor: $("#SensorTable_IsDeletedSensor").is(':checked')
                     };
+                },
+            },
+            initComplete: function (settings, result) {
+                result.data.forEach(function (row) {
+                    sensorConfigsAdded;
+                    if (currentBoxId && row.sensorConfigs && row.sensorConfigs.length > 0) {
+                        sensorConfigsAdded = _.where(row.sensorConfigs, { boxId: currentBoxId }).map(function (p) { return p.boxPort; });
+                    }
+                    if (sensorConfigsAdded && sensorConfigsAdded.length > 0) {
+                        sensorConfigsAdded.forEach(function (p) {
+                            rangePort = _.without(rangePort, p);
+                        })
+                    }
+                })
+                $.each(rangePort, function (i, item) {
+                    $('select[name=boxPortDefault]').append($('<option>', {
+                        value: item,
+                        text: item
+                    }));
+                });
+                countInitComplete++;
+            },
+            drawCallback: function (settings) {
+                if (countInitComplete > 0) {
+                    $.each(rangePort, function (i, item) {
+                        $('select[name=boxPortDefault]').append($('<option>', {
+                            value: item,
+                            text: item
+                        }));
+                    });
                 }
             },
             columnDefs: [
@@ -126,39 +150,7 @@
                     orderable: false,
                     data: null,
                     render: function (data, type, row, meta) {
-                        ////result.items.forEach(function (row) {
-                        ////    let sensorConfigsAdded;
-                        ////    if (currentBoxId && row.sensorConfigs && row.sensorConfigs.length > 0) {
-                        ////        sensorConfigsAdded = _.where(row.sensorConfigs, { boxId: currentBoxId }).map(function (p) { return p.boxPort; });
-                        ////    }
-                        ////    if (sensorConfigsAdded && sensorConfigsAdded.length > 0) {
-                        ////        sensorConfigsAdded.forEach(function (p) {
-                        ////            rangePort = _.without(rangePort, p);
-                        ////        })
-                        ////    }
-                        ////    //if (currentBoxId && data.sensorConfigs && data.sensorConfigs.length > 0) {
-                        ////    //    sensorConfigsAdded = sensorConfigsAdded.concat(_.where(data.sensorConfigs, { boxId: currentBoxId }).map(function (p) { return p.boxPort; }));
-                        ////    //}
-                        ////    //if (sensorConfigsAdded && sensorConfigsAdded.length > 0) {
-                        ////    //    sensorConfigsAdded.forEach(function (p) {
-                        ////    //        rangePort = _.without(rangePort, p);
-                        ////    //    })
-                        ////    //}
-                        ////})
-                        //let optionsBoxPort = '';
-                        //if (currentBoxId && row.sensorConfigs && row.sensorConfigs.length > 0) {
-                        //    sensorConfigsAdded = _.where(row.sensorConfigs, { boxId: currentBoxId }).map(function (p) { return p.boxPort; });
-                        //    //sensorConfigsAdded = sensorConfigsAdded.concat(_.where(row.sensorConfigs, { boxId: currentBoxId }).map(function (p) { return p.boxPort; }));
-                        //}
-                        ////sensorConfigsAdded = _.uniq(sensorConfigsAdded);
-                        //if (sensorConfigsAdded && sensorConfigsAdded.length > 0) {
-                        //    sensorConfigsAdded.forEach(function (p) {
-                        //        rangePort = _.without(rangePort, p);
-                        //    })
-                        //}
-                        let text = '<select style="width: 70px;" name="boxPortDefault" class="form-control">'
-                            + optionsBoxPort
-                            + '</select>';
+                        let text = '<select style="width: 70px;" name="boxPortDefault" class="form-control"></select>';
                         return text;
                     }
                 },
@@ -207,11 +199,6 @@
         }
 
         function addSensorConfig(sensor, rowIndex) {
-            //if (sensor.sensorName === app.consts.sensorManagement.defaultAdminSensorName) {
-            //    abp.message.warn(app.localize("{0}SensorCannotBeDeleted", app.consts.sensorManagement.defaultAdminSensorName));
-            //    return;
-            //}
-            debugger
             let row = dataTable.data()[rowIndex];
             let highValueDefault = dataTable.cell(rowIndex, 6).nodes().to$().find('input[name ="highValueDefault"]').val();
             let lowValueDefault = dataTable.cell(rowIndex, 7).nodes().to$().find('input[name ="lowValueDefault"]').val();
@@ -219,8 +206,6 @@
             let boxPort = dataTable.cell(rowIndex, 5).nodes().to$().find('select[name ="boxPortDefault"]').val();
             let alarmMessage = dataTable.cell(rowIndex, 9).nodes().to$().find('input[name ="alarmMessageDefault"]').val();
             let isAlarm = dataTable.cell(rowIndex, 4).nodes().to$().find('input[name ="isAlarmDefault"]').prop('checked');
-
-
             abp.message.confirm(
                 app.localize('Sensor') + ': ' + sensor.sensorName,
                 app.localize('AreYouSure'),
@@ -242,6 +227,8 @@
                         _sensorConfigService.createOrUpdate(sensorConfig).done(function () {
                             countAdded++;
                             //getSensor(true);
+                            $('#SensorTable option[value=' + boxPort + ']').remove();
+                            dataTable.rows(rowIndex).nodes().to$().addClass('dt-sensor-added-bg');
                             abp.notify.success(app.localize('SuccessfullyAdded'));
                         }).always(function () {
                             abp.ui.clearBusy('.modal-body');

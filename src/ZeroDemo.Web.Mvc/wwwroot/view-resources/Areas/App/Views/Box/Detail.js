@@ -4,6 +4,15 @@
         var _$boxForm = null;
         var rangePort = [];
         var currentBoxId = parseInt($('input[name=BoxId]').val());
+        var _$sensorConfigTable = $('#SensorConfigTable');
+        var _sensorConfigService = abp.services.app.sensorConfig;
+        var _$boxManagerTable = $('#BoxManagerTable');
+        var _boxManagerService = abp.services.app.boxManager;
+        var _permissions = {
+            create: abp.auth.hasPermission('Pages.SensorConfig.Create'),
+            edit: abp.auth.hasPermission('Pages.SensorConfig.Edit'),
+            'delete': abp.auth.hasPermission('Pages.SensorConfig.Delete')
+        };
 
         $('.save-button').click(function () {
             if (!_$boxForm.valid()) {
@@ -29,7 +38,14 @@
         $(function () {
             _$boxForm = $('form[name=BoxInformationsForm]');
             getRangePort(true);
+
+            $('#SensorConfigTable').DataTable().responsive.recalc();
           
+            $('#BoxManagerTable').DataTable().responsive.recalc();
+
+
+            //$('#SensorConfigTable').DataTable().responsive.rebuild();
+            //$('#BoxManagerTable').DataTable().responsive.rebuild();
         });
 
         function getRangePort() {
@@ -38,14 +54,6 @@
         }
 
 
-        var _$sensorConfigTable = $('#SensorConfigTable');
-        var _sensorConfigService = abp.services.app.sensorConfig;
-
-        var _permissions = {
-            create: abp.auth.hasPermission('Pages.SensorConfig.Create'),
-            edit: abp.auth.hasPermission('Pages.SensorConfig.Edit'),
-            'delete': abp.auth.hasPermission('Pages.SensorConfig.Delete')
-        };
 
         var _addSensorConfigModal = new app.ModalManager({
             viewUrl: abp.appPath + 'App/Box/AddSensorConfigModal',
@@ -325,9 +333,6 @@
 
 
 
-        var _$boxManagerTable = $('#BoxManagerTable');
-        var _boxManagerService = abp.services.app.boxManager;
-
         var dataTableBoxManager = _$boxManagerTable.DataTable({
             paging: true,
             serverSide: true,
@@ -446,7 +451,16 @@
                     }
                 }
 
-            ]
+            ],
+            initComplete: function (settings, json) {
+                //debugger
+                //$('#BoxManagerTable').DataTable().responsive.recalc();
+            }
+        });
+
+        $('#BoxManagerTable tbody').on('click', 'tr .dropdown-item:even', function () {//vị trí lẻ 1,3,5
+            let rowIndex = $(this).closest("tr").index();
+            addBoxManager(rowIndex);
         });
 
         function addBoxManager(rowIndex) {
@@ -509,9 +523,8 @@
             dataTableBoxManager.ajax.reload();
         }
 
-        $('#BoxManagerTable tbody').on('click', 'tr .dropdown-item:even', function () {//vị trí lẻ 1,3,5
-            let rowIndex = $(this).closest("tr").index();
-            addBoxManager(rowIndex);
-        });
+        $('#SensorConfigTable').DataTable().responsive.recalc();
+
+        $('#BoxManagerTable').DataTable().responsive.recalc();
     });
 })();
