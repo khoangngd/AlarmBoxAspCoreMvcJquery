@@ -3,7 +3,7 @@
         var _boxService = abp.services.app.box;
         var _$boxForm = null;
         var rangePort = [];
-        var currentBoxId = $('input[name=BoxId]').val();
+        var currentBoxId = parseInt($('input[name=BoxId]').val());
 
         $('.save-button').click(function () {
             if (!_$boxForm.valid()) {
@@ -68,7 +68,7 @@
                 inputFilter: function () {
                     return {
                         filter: $('#SensorConfigTableFilter').val(),
-                        boxId: parseInt(currentBoxId),
+                        boxId: currentBoxId,
                         //isDeletedSensorConfig: $("#SensorConfigTable_IsDeletedSensorConfig").is(':checked')
                     };
                 }
@@ -179,7 +179,7 @@
                     targets: 6,
                     data: "highValue",
                     render: function (data, type, row, meta) {
-                        let text = '<input type="number" style="min-width: 80px;" class="form-control" placeholder="' + app.localize('HighValue') + '" name="highValue" value="' + data + '">';
+                        let text = '<input type="number" style="max-width: 80px;" class="form-control" placeholder="' + app.localize('HighValue') + '" name="highValue" value="' + data + '">';
                         return text;
                     }
                 },
@@ -188,7 +188,7 @@
                     targets: 7,
                     data: "lowValue",
                     render: function (data, type, row, meta) {
-                        let text = '<input type="number" style="min-width: 80px;" class="form-control" placeholder="' + app.localize('LowValue') + '" name="lowValue" value="' + data + '">';
+                        let text = '<input type="number" style="max-width: 80px;" class="form-control" placeholder="' + app.localize('LowValue') + '" name="lowValue" value="' + data + '">';
                         return text;
                     }
                 },
@@ -197,7 +197,7 @@
                     targets: 8,
                     data: "targetValue",
                     render: function (data, type, row, meta) {
-                        let text = '<input type="number" style="min-width: 80px;" class="form-control" placeholder="' + app.localize('TargetValue') + '" name="targetValue" value="' + data + '">';
+                        let text = '<input type="number" style="max-width: 80px;" class="form-control" placeholder="' + app.localize('TargetValue') + '" name="targetValue" value="' + data + '">';
                         return text;
                     }
                 },
@@ -207,7 +207,7 @@
                     orderable: false,
                     data: "alarmMessage",
                     render: function (data, type, row, meta) {
-                        let text = '<input type="text" style="width: 100%;" class="form-control" placeholder="' + app.localize('Message') + '" name="alarmMessage" value="' + (data ? data : '') + '">';
+                        let text = '<input type="text" style="min-width: 200px;" class="form-control" placeholder="' + app.localize('Message') + '" name="alarmMessage" value="' + (data ? data : '') + '">';
                         return text;
                     }
                 },
@@ -244,7 +244,7 @@
                         abp.ui.setBusy('.tab-content');
                         let sensorConfig = {
                             id: row.id,
-                            boxId: parseInt(currentBoxId), //window.location.href.split('/')[window.location.href.split('/').length-1]
+                            boxId: currentBoxId, //window.location.href.split('/')[window.location.href.split('/').length-1]
                             sensorId: row.sensorId ? row.sensorId : row.sensor.id,
                             highValue: highValue,
                             lowValue: lowValue,
@@ -337,7 +337,7 @@
                 inputFilter: function () {
                     return {
                         filter: $('#BoxManagerTableFilter').val(),
-                        boxId: parseInt(currentBoxId),
+                        boxId: currentBoxId,
                         //isDeletedBoxManager: $("#BoxManagerTable_IsDeletedBoxManager").is(':checked')
                     };
                 }
@@ -468,7 +468,7 @@
                         abp.ui.setBusy('.tab-content');
                         let boxManager = {
                             id: row.id ? row.id : null,
-                            boxId: parseInt(currentBoxId), //window.location.href.split('/')[window.location.href.split('/').length-1]
+                            boxId: currentBoxId, //window.location.href.split('/')[window.location.href.split('/').length-1]
                             managerEmail: managerEmail,
                             managerPhoneNumber: managerPhoneNumber,
                             managerName: managerName,

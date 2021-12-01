@@ -38,7 +38,7 @@
             //    debugger;
             //    //$compile(row)($scope);
             //    //if (currentBoxId && data.sensorConfigs && data.sensorConfigs.length > 0) {
-            //    //    let count = _.where(data.sensorConfigs, { boxId: parseInt(currentBoxId) }).length;
+            //    //    let count = _.where(data.sensorConfigs, { boxId: currentBoxId }).length;
             //    //    if (count > 0)
             //    //        $(row).addClass('dt-sensor-added-bg');
             //    //}
@@ -129,7 +129,7 @@
                         ////result.items.forEach(function (row) {
                         ////    let sensorConfigsAdded;
                         ////    if (currentBoxId && row.sensorConfigs && row.sensorConfigs.length > 0) {
-                        ////        sensorConfigsAdded = _.where(row.sensorConfigs, { boxId: parseInt(currentBoxId) }).map(function (p) { return p.boxPort; });
+                        ////        sensorConfigsAdded = _.where(row.sensorConfigs, { boxId: currentBoxId }).map(function (p) { return p.boxPort; });
                         ////    }
                         ////    if (sensorConfigsAdded && sensorConfigsAdded.length > 0) {
                         ////        sensorConfigsAdded.forEach(function (p) {
@@ -228,7 +228,7 @@
                     if (isConfirmed) {
                         abp.ui.setBusy('.modal-body');
                         let sensorConfig = {
-                            boxId: parseInt(currentBoxId), //window.location.href.split('/')[window.location.href.split('/').length-1]
+                            boxId: currentBoxId, //window.location.href.split('/')[window.location.href.split('/').length-1]
                             sensorId: sensor.id,
                             highValue: highValueDefault,
                             lowValue: lowValueDefault,
