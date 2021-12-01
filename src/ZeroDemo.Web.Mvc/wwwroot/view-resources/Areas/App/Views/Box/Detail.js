@@ -363,14 +363,11 @@
                         text: '<i class="fa fa-cog"></i> ' + app.localize('Actions') + ' <span class="caret"></span>',
                         items: [{
                             text: app.localize('Edit'),
-                            name: 'editBtn',
                             visible: function () {
                                 return _permissions.edit;
                             },
                             action: function (data) {
-                                //addBoxManager(data.record);
                             },
-                            //className: 'editButton'
                         }, {
                             text: app.localize('Delete'),
                             visible: function () {
@@ -513,10 +510,8 @@
         }
 
         $('#BoxManagerTable tbody').on('click', 'tr .dropdown-item:even', function () {//vị trí lẻ 1,3,5
-            debugger;
             let rowIndex = $(this).closest("tr").index();
             addBoxManager(rowIndex);
-            //console.log('click', rowIndex);
         });
     });
 })();

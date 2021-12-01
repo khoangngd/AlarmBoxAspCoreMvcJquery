@@ -75,10 +75,10 @@
                         element: $("<div/>")
                             //.addClass("text-center")
                             .append($("<button/>")
-                                .addClass("btn btn-primary")
+                                .addClass("btn btn-outline-primary btn-sm")
                                 .attr("title", app.localize("Add"))
                                 .text(app.localize("Add"))
-                                .append($("<i/>").addClass("fa fa-plus pull-left"))
+                                .append($("<i/>").addClass("la la-plus pull-left"))
                             ).click(function () {
                                 addSensorConfig($(this).data(), $(this).closest('tr').index());
                             }),
