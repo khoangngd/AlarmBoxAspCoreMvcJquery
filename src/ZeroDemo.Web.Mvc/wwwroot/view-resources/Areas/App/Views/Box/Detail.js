@@ -245,7 +245,7 @@
 
 
             abp.message.confirm(
-                'asdasd',//app.localize('Sensor') + ': ' + row.sensor.sensorName,
+                app.localize('Sensor') + ': ' + row.sensor.sensorName,
                 app.localize('AreYouSure'),
                 function (isConfirmed) {
                     if (isConfirmed) {
@@ -330,8 +330,6 @@
         });
 
         $('#SensorConfigTableFilter').focus();
-
-
 
         var dataTableBoxManager = _$boxManagerTable.DataTable({
             paging: true,
@@ -451,11 +449,13 @@
                     }
                 }
 
-            ],
-            initComplete: function (settings, json) {
-                //debugger
-                //$('#BoxManagerTable').DataTable().responsive.recalc();
-            }
+            ]
+        });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) { //when datatable in tabs, bootstrap responsive not run
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust()
+                .responsive.recalc();
         });
 
         $('#BoxManagerTable tbody').on('click', 'tr .dropdown-item:even', function () {//vị trí lẻ 1,3,5
