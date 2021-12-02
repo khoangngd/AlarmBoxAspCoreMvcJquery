@@ -14,11 +14,12 @@
 
 @section Scripts
 {
-    <environment names="Development">
-        @*<script src="~/view-resources/Areas/App/Views/Box/_CreateOrEditModal.js" asp-append-version="true"></script>*@
+    @*<environment names="Development">
+        <script src="~/view-resources/Areas/App/Views/Box/_CreateOrEditModal.js" asp-append-version="true"></script>
         <script src="~/view-resources/Areas/App/Views/Box/Detail.js" asp-append-version="true"></script>
-        @*<script src="~/view-resources/Areas/App/Views/Sensor/Index.js" asp-append-version="true"></script>*@
-    </environment>
+        <script src="~/view-resources/Areas/App/Views/Sensor/Index.js" asp-append-version="true"></script>
+    </environment>*@
+    <script src="~/view-resources/Areas/App/Views/Box/Detail.js" asp-append-version="true"></script>
 }
 
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
@@ -139,7 +140,7 @@
                             </div>
                         </div>
                         <div class="align-items-center">
-                            <table id="SensorConfigTable" class="table table-separate table-head-custom dataTable no-footer dtr-inline dt-responsive nowrap">                               
+                            <table id="SensorConfigTable" class="table table-separate table-head-custom dataTable no-footer dtr-inline dt-responsive nowrap">
                             </table>
                         </div>
                     </div>

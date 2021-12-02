@@ -41,6 +41,7 @@ using Newtonsoft.Json.Serialization;
 using Owl.reCAPTCHA;
 using HealthChecksUISettings = HealthChecks.UI.Configuration.Settings;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
+using ZeroDemo.Web.CookiePolicy;
 
 namespace ZeroDemo.Web.Startup
 {
@@ -64,6 +65,10 @@ namespace ZeroDemo.Web.Startup
             {
                 options.Filters.Add(new AbpAutoValidateAntiforgeryTokenAttribute());
             }).AddNewtonsoftJson();
+
+            //
+            //services.AddSameSiteCookiePolicy();
+
 
             services.AddSignalR();
 
@@ -182,6 +187,11 @@ namespace ZeroDemo.Web.Startup
             {
                 options.UseAbpRequestLocalization = false; //used below: UseAbpRequestLocalization
             });
+
+            //
+            //app.UseCookiePolicy();
+
+
 
             if (env.IsDevelopment())
             {
